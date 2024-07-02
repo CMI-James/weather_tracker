@@ -1,30 +1,29 @@
 const express = require("express");
 const axios = require("axios");
 const app = express();
+require("dotenv").config();
 const PORT = process.env.PORT || 3000;
 
 app.get("/api/hello", async (req, res) => {
   const visitorName = req.query.visitor_name || "Mark";
   const clientIp = req.ip;
-
-
+  const weatherApiKey = process.env.WEATHERAPI_KEY;
   try {
     const ipInfoResponse = await axios.get(
-      `https://ipinfo.io/${clientIp}/json`
+      `https://ipinfo.io/105.113.26.62/json`
     );
     const location = ipInfoResponse.data.city || "Unknown location";
     const weatherData = await axios.get(
-      `http://api.weatherapi.com/v1/current.json?key=${process.env.WEATHERAPI_KEY}&q=${location}`
+      `http://api.weatherapi.com/v1/current.json?key=${weatherApiKey}&q=${location}`
     );
     const temperature = weatherData.data.current.temp_c;
 
     const greeting = `Hello, ${visitorName}! The temperature is ${temperature} degrees Celsius in ${location}`;
     res.json({
-      visitor_name: visitorName,
-      visitor_ip: clientIp,
+     
+      client_ip: clientIp,
       location: location,
       greeting: greeting,
-      
     });
   } catch (error) {
     console.error("Error:", error.message);
