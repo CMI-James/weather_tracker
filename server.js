@@ -18,8 +18,9 @@ app.get("/api/hello", async (req, res) => {
       `http://api.weatherapi.com/v1/current.json?key=${weatherApiKey}&q=${location}`
     );
     const temperature = weatherData.data.current.temp_c;
-
-    const greeting = `Hello, ${visitorName}! The temperature is ${temperature} degrees Celsius in ${location}`;
+    const greeting = visitorName
+      ? (greeting = `Hello, ${visitorName}! The temperature is ${temperature} degrees Celsius in ${location}`)
+      : (greeting = `Hello! The temperature is ${temperature} degrees Celsius in ${location}`);
     res.json({
       client_ip: clientIp,
       location: location,
