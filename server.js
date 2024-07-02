@@ -19,8 +19,8 @@ app.get("/api/hello", async (req, res) => {
     );
     const temperature = weatherData.data.current.temp_c;
     const greeting = visitorName
-      ? (greeting = `Hello, ${visitorName}! The temperature is ${temperature} degrees Celsius in ${location}`)
-      : (greeting = `Hello! The temperature is ${temperature} degrees Celsius in ${location}`);
+      ? `Hello, ${visitorName}! The temperature is ${temperature} degrees Celsius in ${location}`
+      : `Hello! The temperature is ${temperature} degrees Celsius in ${location}`;
     res.json({
       client_ip: clientIp,
       location: location,
