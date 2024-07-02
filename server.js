@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 3000;
 app.get("/api/hello", async (req, res) => {
   const visitorName = req.query.visitor_name || "Mark";
   const clientIp = req.ip;
-  const weatherApiKey = "f074add3124d4624847235713240107";
+
 
   try {
     const ipInfoResponse = await axios.get(
@@ -14,7 +14,7 @@ app.get("/api/hello", async (req, res) => {
     );
     const location = ipInfoResponse.data.city || "Unknown location";
     const weatherData = await axios.get(
-      `http://api.weatherapi.com/v1/current.json?key=${weatherApiKey}&q=${location}`
+      `http://api.weatherapi.com/v1/current.json?key=${process.env.WEATHERAPI_KEY}&q=${location}`
     );
     const temperature = weatherData.data.current.temp_c;
 
