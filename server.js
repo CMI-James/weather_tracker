@@ -5,7 +5,7 @@ require("dotenv").config();
 const PORT = process.env.PORT || 3000;
 
 app.get("/api/hello", async (req, res) => {
-  const visitorName = req.query.visitor_name || "Mark";
+  const visitorName = req.query.visitor_name;
   const clientIp =
     req.headers["x-forwarded-for"] || req.connection.remoteAddress;
   const weatherApiKey = process.env.WEATHERAPI_KEY;
