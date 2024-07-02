@@ -6,7 +6,8 @@ const PORT = process.env.PORT || 3000;
 
 app.get("/api/hello", async (req, res) => {
   const visitorName = req.query.visitor_name || "Mark";
-  const clientIp = req.ip;
+  const clientIp =
+    req.headers["x-forwarded-for"] || req.connection.remoteAddress;
   const weatherApiKey = process.env.WEATHERAPI_KEY;
   try {
     const ipInfoResponse = await axios.get(
@@ -20,7 +21,7 @@ app.get("/api/hello", async (req, res) => {
 
     const greeting = `Hello, ${visitorName}! The temperature is ${temperature} degrees Celsius in ${location}`;
     res.json({
-      client_ip: clientIp,
+      client_ip: ipInfoResponse.data.ip,
       location: location,
       greeting: greeting,
     });
