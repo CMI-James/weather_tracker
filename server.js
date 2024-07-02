@@ -10,7 +10,7 @@ app.get("/api/hello", async (req, res) => {
   const weatherApiKey = process.env.WEATHERAPI_KEY;
   try {
     const ipInfoResponse = await axios.get(
-      `https://ipinfo.io/105.113.26.62/json`
+      `https://ipinfo.io/${clientIp}/json`
     );
     const location = ipInfoResponse.data.city || "Unknown location";
     const weatherData = await axios.get(
@@ -20,7 +20,6 @@ app.get("/api/hello", async (req, res) => {
 
     const greeting = `Hello, ${visitorName}! The temperature is ${temperature} degrees Celsius in ${location}`;
     res.json({
-     
       client_ip: clientIp,
       location: location,
       greeting: greeting,
